@@ -1,0 +1,97 @@
+
+#include "U8glib.h"
+
+
+const int trigPin_LEFT = 7;
+const int echoPin_LEFT = 8;
+
+const int trigPin_RIGHT = 3;
+const int echoPin_RIGHT = 4;
+
+long duration_LEFT;
+long duration_RIGHT;  
+int distance_LEFT;
+int distance_RIGHT;
+
+
+
+
+void SonicLEFT();
+void SonicRIGHT();
+
+
+
+
+
+
+
+
+
+void setup() 
+{
+  
+  
+
+pinMode(trigPin_LEFT, OUTPUT);// Sets the trigPin as an Output
+pinMode(trigPin_RIGHT, OUTPUT);
+
+pinMode(echoPin_LEFT, INPUT); // Sets the echoPin as an Input
+pinMode(echoPin_RIGHT, INPUT);
+Serial.begin(9600); // Starts the serial communication
+}
+
+
+
+void loop()
+{
+  
+SonicLEFT();
+SonicRIGHT();
+
+// Calculating the distance
+distance_LEFT= duration_LEFT*0.034/2;
+distance_RIGHT= duration_RIGHT*0.034/2;
+
+// Prints the distance on the Serial Monitor
+Serial.print("Distance LEFT: ");
+Serial.println(distance_LEFT);
+
+Serial.print("Distance RIGHT: ");
+Serial.println(distance_RIGHT);
+
+}
+
+
+
+
+
+void SonicLEFT(void)
+
+{
+  digitalWrite(trigPin_LEFT, LOW);
+delayMicroseconds(2);
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(trigPin_LEFT, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin_LEFT, LOW);
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration_LEFT = pulseIn(echoPin_LEFT, HIGH);
+
+return duration_LEFT;
+}
+
+void SonicRIGHT(void)
+{
+
+  digitalWrite(trigPin_RIGHT, LOW);
+delayMicroseconds(2);
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(trigPin_RIGHT, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin_RIGHT, LOW);
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration_RIGHT = pulseIn(echoPin_RIGHT, HIGH);
+
+return duration_RIGHT;
+}
+
